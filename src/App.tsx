@@ -1,3 +1,4 @@
+import { Console } from "console";
 import React, { FC, ChangeEvent, useState } from "react";
 
 import TodoTask from "./TodoTask";
@@ -5,15 +6,17 @@ import { ITask } from "./TodoTask";
 
 const App: FC = () => {
   const [task, setTask] = useState<string>("");
-  const [completed, setCompleted] = useState<boolean>(false);
+ 
   const [todoList, setTodoList] = useState<ITask[]>([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
       setTask(event.target.value);
   };
 
+
+  
   const addTask = (): void => {
-    const newTask = { taskName: task,completed:completed };
+    const newTask = { taskName: task };
     if(newTask.taskName!=""){
       setTodoList([...todoList, newTask]);
       setTask("");
@@ -29,32 +32,26 @@ const App: FC = () => {
   };
 
   return (
-    <div className="background-color: rgb(0 0 0)">
+    <div className="bg-gradient-to-r from-fuchsia-200 to-purple-400 to-indigo-300 h-screen grid justify-items-center ">
 
-      <button className="bg-indigo-500;">
-        Save changes
-      </button>
-        <h1 className="text-3xl font-bold underline text-red-500">
-          Hello world!
-        </h1>
-
-        <div>
-        {todoList.map((task: ITask, key: number) => {
-            return <TodoTask key={key} task={task} deleteTask={deleteTask} />;
-          })}
-        </div>
-
-        <div>
-          <input
-            type="text"
-            placeholder="Task..."
-            name="task"
-            value={task}
-            onChange={handleChange}
-          />
-          <button onClick={addTask}>Add Task</button>
-         
-        </div>
+        <div className="bg-white w-5/12  rounded-lg  my-14 ">
+          <div >
+              {todoList.map((task: ITask, key: number) => {
+                  return <TodoTask key={key} task={task} deleteTask={deleteTask} />;
+              })}
+          </div>
+          <div className="grid justify-items-center my-8 top-0">
+            <input className="rounded-lg border-2 text-center "
+              type="text"
+              placeholder="Add new todo"
+              name="task"
+              value={task}
+              onChange={handleChange}
+            />
+           
+            <button className="bg-yellow-400 rounded-full w-10 h-10 text-xl font-black text-white" onClick={addTask}> + </button>
+          </div>
+      </div>
     </div>
   );
 };
